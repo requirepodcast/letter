@@ -39,16 +39,51 @@ const Description = styled.p`
 	margin-bottom: 0;
 `;
 
+const SignUp = styled.div`
+	width: 100%;
+	display: flex;
+	margin-top: 1em;
+	justify-content: space-between;
+`;
+
+const Input = styled.input`
+	background: #ffffff22;
+	padding: 0.2em;
+	border-radius: 4px;
+	border: none;
+	color: white;
+	font-family: "Fira Code", monospace;
+`;
+
+const Button = styled.a`
+	cursor: pointer;
+	display: block;
+	font-size: 16px;
+	padding: 2px 4px;
+	border-width: 2px;
+	border-style: solid;
+	border-color: rgb(255, 83, 112);
+	border-radius: 4px;
+	transition: background 0.2s ease;
+
+	&:hover {
+		background: rgb(255, 83, 112);
+	}
+`;
+
 export default function Box() {
 	return (
 		<Container>
 			<Column>
 				<Heading>Require Letter</Heading>
 				<Description>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit,
-					laudantium reiciendis officia cupiditate accusamus, exercitationem
-					autem quidem explicabo similique libero culpa! Dolores ut ipsum minus!
+					Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia,
+					totam?
 				</Description>
+				<SignUp>
+					<Input placeholder="Adres E-Mail..." />
+					<Button>Opt-in</Button>
+				</SignUp>
 			</Column>
 			<Column>tutaj będą poprzednie listy :)</Column>
 		</Container>

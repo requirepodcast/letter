@@ -1,0 +1,16 @@
+@import "../fonts/fira_code.css";
+
+html {
+  font-family: "Fira Code", monospace;
+  font-weight: 800;
+  color: #fff;
+}
+
+body {
+  margin: 0;
+  background-color: #0f111a;
+}
+
+* {
+  box-sizing: border-box;
+}

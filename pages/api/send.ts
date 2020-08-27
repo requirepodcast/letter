@@ -3,6 +3,10 @@ import remark from "remark";
 import html from "remark-html";
 import pug from "pug";
 
+const emailTemplate = `
+div !{content}
+`;
+
 export default (req: NowRequest, res: NowResponse) => {
   if (req.headers.api_token !== process.env.API_TOKEN) {
     return res.status(401).json({ error: "Not authenticated" });
@@ -26,7 +30,9 @@ export default (req: NowRequest, res: NowResponse) => {
         return res.status(400).json({ errors: [{ error: `Can't process provided markdown` }] });
       }
 
-      const letterHtml = pug.renderFile("templates/mailTemplate.pug", { content: file });
+      const letterHtml = pug.render(emailTemplate, {
+        content: file,
+      });
 
       return res.json({ message: "Email successfully sent", html: letterHtml });
     });

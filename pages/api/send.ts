@@ -1,11 +1,8 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import remark from "remark";
 import html from "remark-html";
-import pug from "pug";
 
-const emailTemplate = `
-div !{content}
-`;
+const mailTemplate = require("../../templates/mailTemplate.pug");
 
 export default (req: NowRequest, res: NowResponse) => {
   if (req.headers.api_token !== process.env.API_TOKEN) {
@@ -30,9 +27,7 @@ export default (req: NowRequest, res: NowResponse) => {
         return res.status(400).json({ errors: [{ error: `Can't process provided markdown` }] });
       }
 
-      const letterHtml = pug.render(emailTemplate, {
-        content: file,
-      });
+      const letterHtml = mailTemplate({ content: file });
 
       return res.json({ message: "Email successfully sent", html: letterHtml });
     });

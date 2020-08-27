@@ -2,23 +2,25 @@ import { NowRequest, NowResponse } from "@vercel/node";
 import remark from "remark";
 import html from "remark-html";
 import axios from "axios";
+import Joi from "joi";
 
 const mailTemplate = require("../../templates/mailTemplate.pug");
+
+const requestSchema = Joi.object({
+  content: Joi.string().required(),
+  title: Joi.string().required(),
+  send_at: Joi.date().iso(),
+});
 
 export default (req: NowRequest, res: NowResponse) => {
   if (req.headers.api_token !== process.env.API_TOKEN) {
     return res.status(401).json({ error: "Not authenticated" });
   }
 
-  const errors = [];
-  if (!req.body.content) {
-    errors.push({ error: "No content provided" });
-  }
-  if (!req.body.title) {
-    errors.push({ error: "No title provided" });
-  }
-  if (errors.length !== 0) {
-    return res.status(400).json({ errors });
+  const result = requestSchema.validate(req.body, { abortEarly: false });
+
+  if (result.error) {
+    return res.status(400).json({ errors: result.error.details.map(err => err.message) });
   }
 
   remark()
@@ -29,9 +31,13 @@ export default (req: NowRequest, res: NowResponse) => {
       }
 
       const letter = mailTemplate({ content: file });
-      const { title } = req.body;
+      let { title, send_at } = req.body;
 
-      axios
+      if (new Date(send_at).getTime() <= new Date().getTime()) {
+        send_at = null;
+      }
+
+      return axios
         .post(
           "https://api.sendgrid.com/v3/marketing/singlesends",
           {

@@ -3,19 +3,29 @@ import styled from "styled-components";
 
 const Container = styled.div`
   border-radius: 6px;
-  padding: 30px;
   border: 1px solid white;
   background-color: ${({ theme }) => theme.bg.dark};
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   max-width: 1000px;
   width: 100%;
+  height: 100%;
+`;
+
+const Column = styled.div`
+  text-align: center;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 `;
 
 const Heading = styled.h1`
   color: ${({ theme }) => theme.red};
   font-weight: 800;
-  margin-top: 0;
+  margin: 0 0 10px 0;
   position: relative;
   display: inline-block;
 
@@ -37,11 +47,11 @@ const Description = styled.p`
   margin-bottom: 0;
 `;
 
-const SignUp = styled.div`
+const Form = styled.div`
   width: 100%;
   display: flex;
   margin-top: 1em;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 const Input = styled.input`
@@ -55,7 +65,7 @@ const Input = styled.input`
   font-family: "Fira Code", monospace;
   font-size: 12px;
   margin-right: 10px;
-  box-shadow: 0px 0px 0px 0px ${({ theme }) => theme.red};
+  box-shadow: none;
   transition: box-shadow 0.3s ease;
 
   &:focus {
@@ -70,27 +80,33 @@ const Button = styled.a`
   padding: 5px;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.bg.light};
-  box-shadow: 0px 0px 0px 0px ${({ theme }) => theme.red};
+  box-shadow: none;
   transition: box-shadow 0.3s ease;
 
   &:hover {
     box-shadow: 0px 0px 0px 2px ${({ theme }) => theme.red};
   }
 `;
+
+const RedText = styled.span`
+  color: ${({ theme }) => theme.red};
+`;
+
 const Box: React.FC = () => {
   return (
     <Container>
-      <div>
+      <Column>
         <Heading>Require Letter</Heading>
         <Description>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia, totam?
+          Zapisz się do <RedText>require('letter')</RedText>, by co tydzień otrzymywać list ze
+          świeżą dawką wiedzy o JavaScripcie i nie tylko 🔥
         </Description>
-        <SignUp>
+        <Form>
           <Input placeholder="Adres E-Mail..." />
           <Button>Zapisz się</Button>
-        </SignUp>
-      </div>
-      <div>tutaj będą poprzednie listy {":)"}</div>
+        </Form>
+      </Column>
+      <Column>tutaj będą poprzednie listy {":)"}</Column>
     </Container>
   );
 };

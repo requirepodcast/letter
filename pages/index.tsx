@@ -12,7 +12,7 @@ const Container = styled.div`
   background-size: cover;
   flex-direction: column;
   background-position: center center;
-  padding: 20px;
+  padding: 50px;
 `;
 
 const IndexPage: React.FC = () => {

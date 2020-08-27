@@ -47,7 +47,8 @@ export default (req: NowRequest, res: NowResponse) => {
         .then(() => {
           return res.json({ message: "Email successfully sent", html: letter });
         })
-        .catch(() => {
+        .catch(err => {
+          console.log(err.response.data);
           return res.status(500).json({ error: `Can't send the email` });
         });
     });

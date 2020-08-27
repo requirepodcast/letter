@@ -3,38 +3,37 @@ import styled from "styled-components";
 
 const Container = styled.div`
   border-radius: 6px;
-  padding: 1em;
+  padding: 30px;
   border: 1px solid white;
-  display: flex;
-  background: #0f111a;
-`;
-
-const Column = styled.div`
-  flex-direction: column;
-  flex: 1;
-  width: 20em;
-  padding: 1em;
+  background-color: ${({ theme }) => theme.bg.dark};
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  max-width: 1000px;
+  width: 100%;
 `;
 
 const Heading = styled.h1`
-  color: rgb(255, 83, 112);
+  color: ${({ theme }) => theme.red};
   font-weight: 800;
   margin-top: 0;
+  position: relative;
+  display: inline-block;
 
   &:after {
     content: "";
     display: block;
-    width: 33.3%;
+    position: absolute;
+    width: 50%;
     height: 2px;
-    background: white;
-    margin: 0.25em 0 0.25em 2px;
-    float: left;
+    background-color: white;
+    left: 50%;
+    transform: translateX(-50%);
   }
 `;
 
 const Description = styled.p`
   font-weight: 300;
-  color: #cccccc;
+  color: white;
   margin-bottom: 0;
 `;
 
@@ -46,44 +45,54 @@ const SignUp = styled.div`
 `;
 
 const Input = styled.input`
-  background: #ffffff22;
-  padding: 0.2em;
+  background: ${({ theme }) => theme.bg.light};
+  color: gray;
+  outline: none;
+  padding: 5px;
   border-radius: 4px;
   border: none;
   color: white;
   font-family: "Fira Code", monospace;
+  font-size: 12px;
+  margin-right: 10px;
+  box-shadow: 0px 0px 0px 0px ${({ theme }) => theme.red};
+  transition: box-shadow 0.3s ease;
+
+  &:focus {
+    box-shadow: 0px 0px 0px 2px ${({ theme }) => theme.red};
+  }
 `;
 
 const Button = styled.a`
   cursor: pointer;
   display: block;
-  font-size: 16px;
-  padding: 2px 4px;
-  border-width: 2px;
-  border-style: solid;
-  border-color: rgb(255, 83, 112);
+  font-size: 12px;
+  padding: 5px;
   border-radius: 4px;
-  transition: background 0.2s ease;
+  background-color: ${({ theme }) => theme.bg.light};
+  box-shadow: 0px 0px 0px 0px ${({ theme }) => theme.red};
+  transition: box-shadow 0.3s ease;
 
   &:hover {
-    background: rgb(255, 83, 112);
+    box-shadow: 0px 0px 0px 2px ${({ theme }) => theme.red};
   }
 `;
-
-export default function Box() {
+const Box: React.FC = () => {
   return (
     <Container>
-      <Column>
+      <div>
         <Heading>Require Letter</Heading>
         <Description>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia, totam?
         </Description>
         <SignUp>
           <Input placeholder="Adres E-Mail..." />
-          <Button>Opt-in</Button>
+          <Button>Zapisz się</Button>
         </SignUp>
-      </Column>
-      <Column>tutaj będą poprzednie listy :)</Column>
+      </div>
+      <div>tutaj będą poprzednie listy {":)"}</div>
     </Container>
   );
-}
+};
+
+export default Box;

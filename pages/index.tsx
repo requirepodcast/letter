@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import SEO from "../components/SEO";
 import Box from "../components/box";
+import { ContentfulService, Letter } from "../core/contentful";
 
 const Container = styled.div`
   display: flex;
@@ -15,15 +16,21 @@ const Container = styled.div`
   padding: 50px;
 `;
 
-const IndexPage: React.FC = () => {
+const IndexPage: React.FC<{ letters: Letter[] }> = ({ letters }) => {
   return (
     <>
       <SEO />
       <Container>
-        <Box />
+        <Box letters={letters} />
       </Container>
     </>
   );
 };
+
+export async function getStaticProps() {
+  const letters = await new ContentfulService().getAllLetters();
+
+  return { props: { letters } };
+}
 
 export default IndexPage;

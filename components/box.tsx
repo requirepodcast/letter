@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Letter } from "../core/contentful";
 
 const Container = styled.div`
   border-radius: 6px;
@@ -92,7 +93,7 @@ const RedText = styled.span`
   color: ${({ theme }) => theme.red};
 `;
 
-const Box: React.FC = () => {
+const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
   return (
     <Container>
       <Column>
@@ -106,7 +107,11 @@ const Box: React.FC = () => {
           <Button>Zapisz się</Button>
         </Form>
       </Column>
-      <Column>tutaj będą poprzednie listy {":)"}</Column>
+      <Column>
+        {letters.map(letter => (
+          <p key={letter.slug}>{letter.title}</p>
+        ))}
+      </Column>
     </Container>
   );
 };

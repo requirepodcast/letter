@@ -1,6 +1,7 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import remark from "remark";
 import html from "remark-html";
+import axios from "axios";
 
 const mailTemplate = require("../../templates/mailTemplate.pug");
 
@@ -27,8 +28,27 @@ export default (req: NowRequest, res: NowResponse) => {
         return res.status(400).json({ errors: [{ error: `Can't process provided markdown` }] });
       }
 
-      const letterHtml = mailTemplate({ content: file });
+      const letter = mailTemplate({ content: file });
+      const { title } = req.body;
 
-      return res.json({ message: "Email successfully sent", html: letterHtml });
+      axios
+        .post(
+          "https://api.sendgrid.com/v3/marketing/singlesends",
+          {
+            name: title,
+            send_to: { all: true },
+            email_config: {
+              subject: title,
+              html_content: letter,
+            },
+          },
+          { headers: { Authorization: `Bearer ${process.env.SENDGRID_API_KEY}` } },
+        )
+        .then(() => {
+          return res.json({ message: "Email successfully sent", html: letter });
+        })
+        .catch(() => {
+          return res.status(500).json({ error: `Can't send the email` });
+        });
     });
 };

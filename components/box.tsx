@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-  box-shadow: 0 0 4px rgba(255, 255, 255, 0.3), 0 1px 5px rgba(255, 256, 256, 0.5);
   border-radius: 6px;
   padding: 1em;
   border: 1px solid white;
@@ -21,13 +20,13 @@ const Heading = styled.h1`
   color: rgb(255, 83, 112);
   font-weight: 800;
   margin-top: 0;
+
   &:after {
     content: "";
     display: block;
     width: 33.3%;
     height: 2px;
     background: white;
-    box-shadow: 0 0 1px rgba(255, 255, 255, 0.7), 0 1px 2px rgba(255, 256, 256);
     margin: 0.25em 0 0.25em 2px;
     float: left;
   }

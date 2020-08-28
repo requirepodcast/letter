@@ -14,6 +14,10 @@ const Container = styled.div`
   flex-direction: column;
   background-position: center center;
   padding: 50px;
+
+  @media (max-width: 800px) {
+    padding: 20px;
+  }
 `;
 
 const IndexPage: React.FC<{ letters: Letter[] }> = ({ letters }) => {

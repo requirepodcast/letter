@@ -7,20 +7,29 @@ const Container = styled.div`
   border: 1px solid white;
   background-color: ${({ theme }) => theme.bg.dark};
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 1fr 1fr;
   max-width: 1000px;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    border: none;
+  }
 `;
 
 const Column = styled.div`
   text-align: center;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+  background-color: ${({ theme, scrollable }) => scrollable && theme.bg.medium};
+  display: ${({ scrollable }) => !scrollable && "flex"};
+  flex-direction: ${({ scrollable }) => !scrollable && "column"};
+  justify-content: ${({ scrollable }) => !scrollable && "center"};
+  align-items: ${({ scrollable }) => !scrollable && "center"};
+
+  overflow: ${({ scrollable }) => scrollable && "auto"};
 `;
 
 const Heading = styled.h1`
@@ -133,9 +142,11 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
           <Button onClick={signUp}>Zapisz się</Button>
         </Form>
       </Column>
-      <Column>
+      <Column scrollable={true}>
         {letters.map(letter => (
-          <p key={letter.slug}>{letter.title}</p>
+          <>
+            <p key={letter.slug}>{letter.title}</p>
+          </>
         ))}
       </Column>
     </Container>

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import SEO from "../components/SEO";
-import Box from "../components/box";
+import Box from "../components/Box/Box";
 import { ContentfulService, Letter } from "../core/contentful";
 
 const Container = styled.div`

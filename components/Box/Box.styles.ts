@@ -1,8 +1,6 @@
-import React, { useState } from "react";
 import styled from "styled-components";
-import { Letter } from "../core/contentful";
 
-const Container = styled.div`
+export const Container = styled.div`
   border-radius: 6px;
   border: 1px solid white;
   background-color: ${({ theme }) => theme.bg.dark};
@@ -20,7 +18,7 @@ const Container = styled.div`
   }
 `;
 
-const Column = styled.div`
+export const Column = styled.div`
   text-align: center;
   padding: 20px;
   background-color: ${({ theme, scrollable }) => scrollable && theme.bg.medium};
@@ -32,7 +30,7 @@ const Column = styled.div`
   overflow: ${({ scrollable }) => scrollable && "auto"};
 `;
 
-const Heading = styled.h1`
+export const Heading = styled.h1`
   color: ${({ theme }) => theme.red};
   font-weight: 800;
   margin: 0 0 10px 0;
@@ -51,20 +49,20 @@ const Heading = styled.h1`
   }
 `;
 
-const Description = styled.p`
+export const Description = styled.p`
   font-weight: 300;
   color: white;
   margin-bottom: 0;
 `;
 
-const Form = styled.div`
+export const Form = styled.div`
   width: 100%;
   display: flex;
   margin-top: 1em;
   justify-content: center;
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   background: ${({ theme }) => theme.bg.light};
   color: gray;
   outline: none;
@@ -83,7 +81,7 @@ const Input = styled.input`
   }
 `;
 
-const Button = styled.a`
+export const Button = styled.a`
   cursor: pointer;
   display: block;
   font-size: 12px;
@@ -98,59 +96,6 @@ const Button = styled.a`
   }
 `;
 
-const RedText = styled.span`
+export const RedText = styled.span`
   color: ${({ theme }) => theme.red};
 `;
-
-const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
-  const [email, setEmail] = useState("");
-
-  function signUp() {
-    fetch("/api/signup", {
-      body: JSON.stringify({ email }),
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        alert("Signed up");
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
-    setEmail("");
-  }
-
-  return (
-    <Container>
-      <Column>
-        <Heading>Require Letter</Heading>
-        <Description>
-          Zapisz się do <RedText>require('letter')</RedText>, by co tydzień otrzymywać list ze
-          świeżą dawką wiedzy o JavaScripcie i nie tylko 🔥
-        </Description>
-        <Form>
-          <Input
-            placeholder="Adres E-Mail..."
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-          <Button onClick={signUp}>Zapisz się</Button>
-        </Form>
-      </Column>
-      <Column scrollable={true}>
-        {letters.map(letter => (
-          <>
-            <p key={letter.slug}>{letter.title}</p>
-          </>
-        ))}
-      </Column>
-    </Container>
-  );
-};
-
-export default Box;

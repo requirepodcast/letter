@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Letter } from "../core/contentful";
 
@@ -94,6 +94,28 @@ const RedText = styled.span`
 `;
 
 const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
+  const [email, setEmail] = useState("");
+
+  function signUp() {
+    fetch("/api/signup", {
+      body: JSON.stringify({ email }),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        alert("Signed up");
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    setEmail("");
+  }
+
   return (
     <Container>
       <Column>
@@ -103,8 +125,12 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
           świeżą dawką wiedzy o JavaScripcie i nie tylko 🔥
         </Description>
         <Form>
-          <Input placeholder="Adres E-Mail..." />
-          <Button>Zapisz się</Button>
+          <Input
+            placeholder="Adres E-Mail..."
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+          <Button onClick={signUp}>Zapisz się</Button>
         </Form>
       </Column>
       <Column>

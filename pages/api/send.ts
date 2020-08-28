@@ -46,16 +46,21 @@ export default (req: NowRequest, res: NowResponse) => {
             email_config: {
               subject: title,
               html_content: letter,
+              sender_id: 1017070,
+              suppression_group_id: -1,
             },
           },
           { headers: { Authorization: `Bearer ${process.env.SENDGRID_API_KEY}` } },
         )
         .then(() => {
-          return res.json({ message: "Email successfully sent", html: letter });
+          return res.json({
+            message: "Prepared the email, now go to sendgrid and send it to the world!",
+            html: letter,
+          });
         })
         .catch(err => {
           console.log(err.response.data);
-          return res.status(500).json({ error: `Can't send the email` });
+          return res.status(500).json({ error: `Can't prepare the email` });
         });
     });
 };

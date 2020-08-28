@@ -9,7 +9,6 @@ const mailTemplate = require("../../templates/mailTemplate.pug");
 const requestSchema = Joi.object({
   content: Joi.string().required(),
   title: Joi.string().required(),
-  send_at: Joi.date().iso(),
 });
 
 export default (req: NowRequest, res: NowResponse) => {
@@ -31,11 +30,7 @@ export default (req: NowRequest, res: NowResponse) => {
       }
 
       const letter = mailTemplate({ content: file });
-      let { title, send_at } = req.body;
-
-      if (new Date(send_at).getTime() <= new Date().getTime()) {
-        send_at = null;
-      }
+      let { title } = req.body;
 
       return axios
         .post(

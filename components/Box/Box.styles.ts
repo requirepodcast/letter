@@ -20,7 +20,7 @@ export const Container = styled.div`
 
 export const Column = styled.div`
   text-align: center;
-  padding: 20px;
+  padding: ${({ scrollable }) => (scrollable ? "40px 20px" : "20px")};
   background-color: ${({ theme, scrollable }) => scrollable && theme.bg.medium};
   display: ${({ scrollable }) => !scrollable && "flex"};
   flex-direction: ${({ scrollable }) => !scrollable && "column"};

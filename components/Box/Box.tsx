@@ -10,6 +10,7 @@ import {
   Input,
   Button,
 } from "./Box.styles";
+import LetterListItem from "../LetterListItem";
 
 const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
   const [email, setEmail] = useState("");
@@ -52,11 +53,7 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
         </Form>
       </Column>
       <Column scrollable={true}>
-        {letters.map(letter => (
-          <>
-            <p key={letter.slug}>{letter.title}</p>
-          </>
-        ))}
+        {letters.map(letter => <LetterListItem letter={letter} key={letter.slug} />).reverse()}
       </Column>
     </Container>
   );

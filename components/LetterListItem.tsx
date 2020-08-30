@@ -31,7 +31,7 @@ const LetterListItem: React.FC<{ letter: Letter }> = ({ letter }) => {
   return (
     <Container>
       <Link href={"/letter/[slug]"} as={`/letter/${letter.slug}`}>
-        <Title href="#">{letter.title}</Title>
+        <Title href={`/letter/${letter.slug}`}>{letter.title}</Title>
       </Link>
       <LetterDate>{" " + format(new Date(letter.sendAt), "{dd}-{MM}-{yyyy}")}</LetterDate>
       <p>{trim(letter.content, 100)}</p>

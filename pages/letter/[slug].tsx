@@ -40,14 +40,17 @@ const Navigation = styled.nav`
   width: 100%;
 `;
 
-const NavLink = styled.a<{ align: string }>`
+const LinkContainer = styled.div<{ align: string }>`
+  flex: 1;
+  text-align: ${({ align }) => align};
+`;
+
+const NavLink = styled.a`
   color: white;
   text-decoration: none;
-  text-align: ${({ align }) => align};
   cursor: pointer;
   color: ${({ theme }) => theme.red};
   text-decoration: underline;
-  flex: 1;
 `;
 
 const H2 = styled.h2`
@@ -71,18 +74,18 @@ const LetterPage: React.FC<{ letter: Letter; next: Letter; prev: Letter }> = ({
         </Content>
         <Navigation>
           {prev && (
-            <Link href="/letter/[slug]" as={`/letter/${prev.slug}`}>
-              <NavLink align={"left"} href="#">
-                {"<"} Poprzedni
-              </NavLink>
-            </Link>
+            <LinkContainer align="left">
+              <Link href="/letter/[slug]" as={`/letter/${prev.slug}`}>
+                <NavLink href={`/letter/${prev.slug}`}>{"<"} Poprzedni</NavLink>
+              </Link>
+            </LinkContainer>
           )}
           {next && (
-            <Link href="/letter/[slug]" as={`/letter/${next.slug}`}>
-              <NavLink align={"right"} href="#">
-                Następny {">"}
-              </NavLink>
-            </Link>
+            <LinkContainer align="right">
+              <Link href="/letter/[slug]" as={`/letter/${next.slug}`}>
+                <NavLink href={`/letter/${next.slug}`}>Następny {">"}</NavLink>
+              </Link>
+            </LinkContainer>
           )}
         </Navigation>
       </Wrapper>

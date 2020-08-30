@@ -3,7 +3,9 @@ import axios from "axios";
 import Joi from "joi";
 
 const requestSchema = Joi.object({
-  email: Joi.string().email().required(),
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required(),
 });
 
 export default (req: NowRequest, res: NowResponse) => {

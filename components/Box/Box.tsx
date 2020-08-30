@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Joi from "joi";
 import { Letter } from "../../core/contentful";
 import {
   Container,
@@ -14,25 +15,42 @@ import LetterListItem from "../LetterListItem";
 
 const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
 
   function signUp() {
-    fetch("/api/signup", {
-      body: JSON.stringify({ email }),
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        alert("Signed up");
+    if (!error) {
+      fetch("/api/signup", {
+        body: JSON.stringify({ email }),
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .catch(err => {
-        console.log(err);
-      });
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          alert("Signed up");
+        })
+        .catch(err => {
+          console.log(err);
+        });
 
-    setEmail("");
+      setEmail("");
+    }
+  }
+
+  function validate(s) {
+    if (s === "") return setError("");
+
+    const result = Joi.string()
+      .email({ tlds: { allow: false } })
+      .validate(s);
+
+    if (result.error) {
+      return setError(result.error.message);
+    }
+
+    return setError("");
   }
 
   return (
@@ -40,14 +58,19 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
       <Column>
         <Heading>Require Letter</Heading>
         <Description>
-          Zapisz się do <RedText>require('letter')</RedText>, by co tydzień otrzymywać list ze
-          świeżą dawką wiedzy o JavaScripcie i nie tylko 🔥
+          Nie zostań w tyle, wiedz więcej i bądź na bieżąco w świecie JavaScriptu - zapisz się do{" "}
+          <RedText>require('letter')</RedText> i co tydzień otrzymuj od nas list z solidną dawką
+          wiedzy!
         </Description>
         <Form>
           <Input
             placeholder="Adres E-Mail..."
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={e => {
+              validate(e.target.value);
+              setEmail(e.target.value);
+            }}
+            error={error}
           />
           <Button onClick={signUp}>Zapisz się</Button>
         </Form>

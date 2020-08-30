@@ -66,7 +66,7 @@ export const Input = styled.input`
   background: ${({ theme }) => theme.bg.light};
   color: gray;
   outline: none;
-  padding: 5px;
+  padding: 5px 10px;
   border-radius: 4px;
   border: none;
   color: white;
@@ -75,9 +75,12 @@ export const Input = styled.input`
   margin-right: 10px;
   box-shadow: none;
   transition: box-shadow 0.3s ease;
+  appearance: none;
+  --webkit-appearance: none;
+  box-shadow: ${({ error }) => error && `0px 0px 0px 2px red`};
 
   &:focus {
-    box-shadow: 0px 0px 0px 2px ${({ theme }) => theme.red};
+    box-shadow: 0px 0px 0px 2px ${({ theme, error }) => (error ? "red" : theme.red)};
   }
 `;
 
@@ -85,11 +88,13 @@ export const Button = styled.a`
   cursor: pointer;
   display: block;
   font-size: 12px;
-  padding: 5px;
+  padding: 5px 10px;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.bg.light};
   box-shadow: none;
   transition: box-shadow 0.3s ease;
+  appearance: none;
+  --webkit-appearance: none;
 
   &:hover {
     box-shadow: 0px 0px 0px 2px ${({ theme }) => theme.red};

@@ -20,6 +20,17 @@ const Content = styled.div`
   padding: 20px;
   background-color: white;
   color: black;
+
+  a {
+    color: ${({ theme }) => theme.red};
+  }
+
+  code {
+    font-family: inherit;
+    background-color: #eee;
+    padding: 0 3px;
+    color: ${({ theme }) => theme.bg.lighter};
+  }
 `;
 
 const Navigation = styled.nav`
@@ -39,9 +50,9 @@ const NavLink = styled.a<{ align: string }>`
 `;
 
 const H2 = styled.h2`
-  color: ${({ theme }) => theme.bg.dark};
+  color: ${({ theme }) => theme.bg.lighter};
   padding-bottom: 10px;
-  border-bottom: 2px solid ${({ theme }) => theme.bg.dark};
+  border-bottom: 2px solid ${({ theme }) => theme.bg.lighter};
 `;
 
 const LetterPage: React.FC<{ letter: Letter; next: Letter; prev: Letter }> = ({

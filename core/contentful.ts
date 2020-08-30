@@ -3,9 +3,9 @@ import { createClient, Entry } from "contentful";
 export interface Letter {
   title: string;
   slug: string;
-  send_at: string;
+  sendAt: string;
   content: string;
-  content_html?: string;
+  contentHtml?: string;
 }
 
 export class ContentfulService {

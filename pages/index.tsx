@@ -9,7 +9,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-image: url("./background.png");
+  background-image: url("/background.png");
   background-size: cover;
   flex-direction: column;
   background-position: center center;

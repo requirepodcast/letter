@@ -64,7 +64,7 @@ const LetterPage: React.FC<{ letter: Letter; next: Letter; prev: Letter }> = ({
     <Wrapper>
       <Content>
         <H2>{letter.title}</H2>
-        <article dangerouslySetInnerHTML={{ __html: letter.content_html }} />
+        <article dangerouslySetInnerHTML={{ __html: letter.contentHtml }} />
       </Content>
       <Navigation>
         {prev && (
@@ -98,7 +98,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const { letter, next, prev } = await new ContentfulService().getLetterBySlug(params.slug);
 
-  letter.content_html = remark().use(html).processSync(letter.content).toString();
+  letter.contentHtml = remark().use(html).processSync(letter.content).toString();
 
   return {
     props: {

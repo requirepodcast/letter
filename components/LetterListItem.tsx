@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Link, { LinkProps } from "next/link";
+import Link from "next/link";
+import { format } from "light-date";
 import { Letter } from "../core/contentful";
 import { trim } from "../utils/trim";
 
@@ -19,12 +20,18 @@ const Title = styled.a`
   }
 `;
 
+export const LetterDate = styled.span`
+  font-size: 12px;
+  color: grey;
+`;
+
 const LetterListItem: React.FC<{ letter: Letter }> = ({ letter }) => {
   return (
     <Container>
       <Link href={"/letter/[slug]"} as={`/letter/${letter.slug}`}>
         <Title>{letter.title}</Title>
       </Link>
+      <LetterDate>{" " + format(new Date(letter.sendAt), "{dd}-{MM}-{yyyy}")}</LetterDate>
       <p>{trim(letter.content, 100)}</p>
     </Container>
   );

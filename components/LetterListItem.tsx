@@ -14,22 +14,24 @@ const Title = styled.a`
   font-weight: bold;
   color: ${({ theme }) => theme.red};
   cursor: pointer;
+  text-decoration: none;
 
   &:hover {
     text-decoration: underline;
   }
 `;
 
-export const LetterDate = styled.span`
+const LetterDate = styled.span`
   font-size: 12px;
   color: grey;
+  white-space: nowrap;
 `;
 
 const LetterListItem: React.FC<{ letter: Letter }> = ({ letter }) => {
   return (
     <Container>
       <Link href={"/letter/[slug]"} as={`/letter/${letter.slug}`}>
-        <Title>{letter.title}</Title>
+        <Title href="#">{letter.title}</Title>
       </Link>
       <LetterDate>{" " + format(new Date(letter.sendAt), "{dd}-{MM}-{yyyy}")}</LetterDate>
       <p>{trim(letter.content, 100)}</p>

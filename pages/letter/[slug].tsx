@@ -4,6 +4,7 @@ import remark from "remark";
 import html from "remark-html";
 import Link from "next/link";
 import { ContentfulService, Letter } from "../../core/contentful";
+import SEO from "../../components/SEO";
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -61,24 +62,31 @@ const LetterPage: React.FC<{ letter: Letter; next: Letter; prev: Letter }> = ({
   prev,
 }) => {
   return (
-    <Wrapper>
-      <Content>
-        <H2>{letter.title}</H2>
-        <article dangerouslySetInnerHTML={{ __html: letter.contentHtml }} />
-      </Content>
-      <Navigation>
-        {prev && (
-          <Link href="/letter/[slug]" as={`/letter/${prev.slug}`}>
-            <NavLink align={"left"}>{"<"} Poprzedni</NavLink>
-          </Link>
-        )}
-        {next && (
-          <Link href="/letter/[slug]" as={`/letter/${next.slug}`}>
-            <NavLink align={"right"}>Następny {">"}</NavLink>
-          </Link>
-        )}
-      </Navigation>
-    </Wrapper>
+    <>
+      <SEO title={letter.title} />
+      <Wrapper>
+        <Content>
+          <H2>{letter.title}</H2>
+          <article dangerouslySetInnerHTML={{ __html: letter.contentHtml }} />
+        </Content>
+        <Navigation>
+          {prev && (
+            <Link href="/letter/[slug]" as={`/letter/${prev.slug}`}>
+              <NavLink align={"left"} href="#">
+                {"<"} Poprzedni
+              </NavLink>
+            </Link>
+          )}
+          {next && (
+            <Link href="/letter/[slug]" as={`/letter/${next.slug}`}>
+              <NavLink align={"right"} href="#">
+                Następny {">"}
+              </NavLink>
+            </Link>
+          )}
+        </Navigation>
+      </Wrapper>
+    </>
   );
 };
 

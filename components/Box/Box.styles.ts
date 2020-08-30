@@ -84,19 +84,27 @@ export const Input = styled.input`
   }
 `;
 
-export const Button = styled.a`
+export const Button = styled.button`
   cursor: pointer;
   display: block;
   font-size: 12px;
   padding: 5px 10px;
   border-radius: 4px;
-  background-color: ${({ theme }) => theme.bg.light};
-  box-shadow: none;
-  transition: box-shadow 0.3s ease;
+  background: ${({ theme }) => theme.bg.light};
   appearance: none;
   --webkit-appearance: none;
+  color: ${({ theme }) => theme.fg};
+  font-family: inherit;
+  border: none;
+  box-shadow: none;
+  transition: box-shadow 0.3s ease;
+  outline: none;
 
   &:hover {
+    box-shadow: 0px 0px 0px 2px ${({ theme }) => theme.red};
+  }
+
+  &:focus {
     box-shadow: 0px 0px 0px 2px ${({ theme }) => theme.red};
   }
 `;

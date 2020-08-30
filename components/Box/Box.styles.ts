@@ -55,7 +55,7 @@ export const Description = styled.p`
   margin-bottom: 0;
 `;
 
-export const Form = styled.div`
+export const Form = styled.form`
   width: 100%;
   display: flex;
   margin-top: 1em;

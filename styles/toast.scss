@@ -1,0 +1,22 @@
+.Toastify__toast {
+  font-family: inherit;
+  padding: 15px 20px;
+  color: #ffffff;
+  background-color: #0b0c12;
+
+  .Toastify__progress-bar {
+    background: #ff5370;
+  }
+}
+
+.Toastify__toast--error {
+  background-color: #0b0c12;
+
+  .Toastify__progress-bar {
+    background: red;
+  }
+}
+
+.Toastify__close-button {
+  display: none;
+}

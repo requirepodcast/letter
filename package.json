@@ -17,6 +17,7 @@
     "pug-loader": "^2.4.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-toastify": "^6.0.8",
     "remark": "^12.0.1",
     "remark-html": "^12.0.0",
     "sass": "^1.26.10",

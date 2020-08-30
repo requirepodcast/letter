@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Joi from "joi";
+import { toast } from "react-toastify";
 import { Letter } from "../../core/contentful";
 import {
   Container,
@@ -27,12 +28,26 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
         },
       })
         .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          alert("Signed up");
+        .then(() => {
+          toast("Dodano do listy subskrybentów 🚀", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
         })
-        .catch(err => {
-          console.log(err);
+        .catch(() => {
+          toast("Nie udało się dodać do listy subskrybentów. Spróbuj ponownie później 😔", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            type: "error",
+          });
         });
 
       setEmail("");
@@ -60,7 +75,7 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
         <Description>
           Nie zostań w tyle, wiedz więcej i bądź na bieżąco w świecie JavaScriptu - zapisz się do{" "}
           <RedText>require('letter')</RedText> i co tydzień otrzymuj od nas list z solidną dawką
-          wiedzy!
+          wiedzy 🔥
         </Description>
         <Form>
           <Input

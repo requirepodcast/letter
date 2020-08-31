@@ -21,7 +21,7 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
   function signUp(e: Event) {
     e.preventDefault();
 
-    if (!error) {
+    if (!error && email) {
       fetch("/api/signup", {
         body: JSON.stringify({ email }),
         method: "POST",
@@ -90,7 +90,7 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
             error={error}
             name="email"
           />
-          <Button onClick={signUp}>Zapisz się</Button>
+          <Button type="submit" value="Zapisz się" />
         </Form>
       </Column>
       <Column scrollable={true}>

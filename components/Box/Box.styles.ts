@@ -84,7 +84,7 @@ export const Input = styled.input`
   }
 `;
 
-export const Button = styled.button`
+export const Button = styled.input`
   cursor: pointer;
   display: block;
   font-size: 12px;

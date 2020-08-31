@@ -18,7 +18,9 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
-  function signUp() {
+  function signUp(e: Event) {
+    e.preventDefault();
+
     if (!error) {
       fetch("/api/signup", {
         body: JSON.stringify({ email }),
@@ -77,7 +79,7 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
           <RedText>require('letter')</RedText> i co tydzień otrzymuj od nas list z solidną dawką
           wiedzy 🔥
         </Description>
-        <Form>
+        <Form onSubmit={signUp}>
           <Input
             placeholder="Adres E-Mail..."
             value={email}
@@ -86,6 +88,7 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
               setEmail(e.target.value);
             }}
             error={error}
+            name="email"
           />
           <Button onClick={signUp}>Zapisz się</Button>
         </Form>

@@ -7,6 +7,7 @@ import { trim } from "../utils/trim";
 
 const Container = styled.div`
   text-align: left;
+  color: #ffffff;
 `;
 
 const Title = styled.a`

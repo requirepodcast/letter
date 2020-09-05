@@ -29,16 +29,26 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
           "Content-Type": "application/json",
         },
       })
-        .then(res => res.json())
-        .then(() => {
-          toast("Dodano do listy subskrybentów 🚀", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+        .then(res => {
+          if (res.status === 201) {
+            toast("Dodano do listy subskrybentów 🚀", {
+              position: "bottom-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
+          } else {
+            toast("Email już na liście subskrybentów ✉️. Do następnego listu!", {
+              position: "bottom-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
+          }
         })
         .catch(() => {
           toast("Nie udało się dodać do listy subskrybentów. Spróbuj ponownie później 😔", {

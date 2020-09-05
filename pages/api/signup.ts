@@ -16,9 +16,11 @@ export default (req: NowRequest, res: NowResponse) => {
   }
 
   return axios
-    .put(
-      "https://api.sendgrid.com/v3/marketing/contacts",
-      { contacts: [{ email: req.body.email }] },
+    .post(
+      "https://api.sendgrid.com/v3/marketing/contacts/search",
+      {
+        query: `email = '${req.body.email}'`,
+      },
       {
         headers: {
           Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
@@ -26,13 +28,33 @@ export default (req: NowRequest, res: NowResponse) => {
         },
       },
     )
-    .then(() => {
-      return res.json({
-        message: "Successfully added to the subscribers list",
-      });
+    .then(({ data: { result } }) => {
+      if (result.length !== 0) {
+        return res.json({ message: "User already registered" });
+      }
+
+      axios
+        .put(
+          "https://api.sendgrid.com/v3/marketing/contacts",
+          { contacts: [{ email: req.body.email }] },
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+              "content-type": "application/json",
+            },
+          },
+        )
+        .then(() => {
+          return res.status(201).json({
+            message: "Successfully added to the subscribers list",
+          });
+        })
+        .catch(err => {
+          console.log(err.response.data);
+          return res.status(500).json({ error: `Can't add user to the list` });
+        });
     })
     .catch(err => {
-      console.log(err.response.data);
       return res.status(500).json({ error: `Can't add user to the list` });
     });
 };

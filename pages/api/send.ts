@@ -29,8 +29,8 @@ export default (req: NowRequest, res: NowResponse) => {
         return res.status(400).json({ errors: [{ error: `Can't process provided markdown` }] });
       }
 
-      const letter = mailTemplate({ content: file });
       let { title } = req.body;
+      const letter = mailTemplate({ content: file, title: title });
 
       return axios
         .post(

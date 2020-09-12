@@ -1,3 +1,58 @@
-div !{content}
+doctype html
+head
+  title #{title}
+  style(type="text/css").
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Mono&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-a(href='\{\{\{unsubscribe\}\}\}') Nie chcę więcej otrzymywać require('letter')
+    body {
+      margin: 0;
+      background-color: #141722;
+      font-family: "Fira Sans", sans-serif;
+      padding: 30px;
+    }
+
+    .wrapper {
+      background-color: white;
+      max-width: 550px;
+      margin: auto;
+    }
+
+    .header {
+      background-color: #0f111a;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      width: 60px;
+      height: 60px;
+    }
+
+    .title {
+      color: #FF5370;
+      font-family: 'Fira Mono', monospace;
+      margin: auto;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .content p {
+      margin: 0;
+    }
+
+    .unsubscribe {
+      color: #FF5370;
+      font-family: 'Fira Mono', monospace;
+      text-align: center;
+      margin: 5px;
+      display: block;
+    }
+body
+  .wrapper
+    header.header
+      img.logo(src="https://require.podcast.gq/static/logo-802c736d140830acbc8cb1b0ee208e4a.png")
+      span.title #{title}
+    article.content !{content}
+  a(href='\{\{\{unsubscribe\}\}\}').unsubscribe Nie chcę więcej otrzymywać require('letter')

@@ -2,57 +2,50 @@ doctype html
 head
   title #{title}
   style(type="text/css").
-    @import url('https://fonts.googleapis.com/css2?family=Fira+Mono&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
-    body {
-      margin: 0;
-      background-color: #141722;
-      font-family: "Fira Sans", sans-serif;
-      padding: 30px;
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Mono';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: local('Fira Mono Regular'), local('FiraMono-Regular'), url(https://fonts.gstatic.com/s/firamono/v9/N0bX2SlFPv1weGeLZDtgKP7Ss9XZYalI.woff2) format('woff2');
     }
-
-    .wrapper {
-      background-color: white;
-      max-width: 550px;
-      margin: auto;
+        /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: italic;
+      font-weight: 400;
+      font-display: swap;
+      src: local('Fira Sans Italic'), local('FiraSans-Italic'), url(https://fonts.gstatic.com/s/firasans/v10/va9C4kDNxMZdWfMOD5VvkrjHYTLVdlTOr0s.woff2) format('woff2');
     }
-
-    .header {
-      background-color: #0f111a;
-      display: flex;
-      align-items: center;
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: italic;
+      font-weight: 700;
+      font-display: swap;
+      src: local('Fira Sans Bold Italic'), local('FiraSans-BoldItalic'), url(https://fonts.gstatic.com/s/firasans/v10/va9f4kDNxMZdWfMOD5VvkrByRCf2VFnklULWJXg.woff2) format('woff2');
     }
-
-    .logo {
-      width: 60px;
-      height: 60px;
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: local('Fira Sans Regular'), local('FiraSans-Regular'), url(https://fonts.gstatic.com/s/firasans/v10/va9E4kDNxMZdWfMOD5VvmYjLazX3dGTP.woff2) format('woff2');
     }
-
-    .title {
-      color: #FF5370;
-      font-family: 'Fira Mono', monospace;
-      margin: auto;
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: local('Fira Sans Bold'), local('FiraSans-Bold'), url(https://fonts.gstatic.com/s/firasans/v10/va9B4kDNxMZdWfMOD5VnLK3eSBf6Xl7Gl3LX.woff2) format('woff2');
     }
-
-    .content {
-      padding: 20px;
-    }
-
-    .content p {
-      margin: 0;
-    }
-
-    .unsubscribe {
-      color: #FF5370;
-      font-family: 'Fira Mono', monospace;
-      text-align: center;
-      margin: 5px;
-      display: block;
-    }
-body
-  .wrapper
-    header.header
-      img.logo(src="https://require.podcast.gq/static/logo-802c736d140830acbc8cb1b0ee208e4a.png")
-      span.title #{title}
-    article.content !{content}
-  a(href='\{\{\{unsubscribe\}\}\}').unsubscribe Nie chcę więcej otrzymywać require('letter')
+body(style="margin: 0; background-color: #141722; font-family: \"Fira Sans\", sans-serif; padding: 30px;")
+  div(style="background-color: white; max-width: 550px; margin: auto;")
+    header(style="background-color: #0f111a; display: flex; align-items: center;")
+      img(src="https://require.podcast.gq/static/logo-802c736d140830acbc8cb1b0ee208e4a.png" style="width: 60px; height: 60px;")
+      span(style="color: #FF5370; font-family: 'Fira Mono', monospace; margin: auto;") #{title}
+    article(style="padding: 0 20px 20px 20px") !{content}
+  a(href='\{\{\{unsubscribe\}\}\}' style="color: #FF5370; font-family: 'Fira Mono', monospace; text-align: center; margin: 5px; display: block;") Nie chcę więcej otrzymywać require('letter')

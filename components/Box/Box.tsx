@@ -31,14 +31,17 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
       })
         .then(res => {
           if (res.status === 201) {
-            toast("Dodano do listy subskrybentów 🚀", {
-              position: "bottom-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-            });
+            toast(
+              "Dodano do listy subskrybentów 🚀. Sprawdź swoją skrzynkę - wysłaliśmy do niej list z odcinkiem specjalnym!",
+              {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              },
+            );
           } else {
             toast("Email już na liście subskrybentów ✉️. Do następnego listu!", {
               position: "bottom-right",
@@ -86,8 +89,8 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
         <Heading>Require Letter</Heading>
         <Description>
           Nie zostań w tyle, wiedz więcej i bądź na bieżąco w świecie JavaScriptu - zapisz się do{" "}
-          <RedText>require('letter')</RedText> i co tydzień otrzymuj od nas list z solidną dawką
-          wiedzy 🔥
+          <RedText>require('letter')</RedText>, odbierz list powitalny z niespodzianką i co tydzień
+          otrzymuj od nas newsletter z solidną dawką wiedzy 🔥
         </Description>
         <Form onSubmit={signUp}>
           <Input

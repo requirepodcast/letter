@@ -28,42 +28,47 @@ const requestSchema = Joi.object({
 });
 
 const sendWelcomeEmail = email => {
-  remark()
-    .use(html)
-    .process(welcomeEmail.replace(`{{{ link }}}`, process.env.WELCOME_LETTER_LINK), (err, file) => {
-      const letter = mailTemplate({ content: file, title: "require('letter')" });
+  return new Promise((resolve, reject) => {
+    remark()
+      .use(html)
+      .process(
+        welcomeEmail.replace(`{{{ link }}}`, process.env.WELCOME_LETTER_LINK),
+        (err, file) => {
+          const letter = mailTemplate({ content: file, title: "require('letter')" });
 
-      axios
-        .post(
-          "https://api.sendgrid.com/v3/mail/send",
-          {
-            personalizations: [
+          axios
+            .post(
+              "https://api.sendgrid.com/v3/mail/send",
               {
-                to: [{ email: email }],
+                personalizations: [
+                  {
+                    to: [{ email: email }],
+                  },
+                ],
+                from: {
+                  email: "require@podcast.gq",
+                  name: "Require Podcast",
+                },
+                subject: "Siema, dzięki że jesteś!",
+                content: [
+                  {
+                    type: "text/html",
+                    value: letter,
+                  },
+                ],
               },
-            ],
-            from: {
-              email: "require@podcast.gq",
-              name: "Require Podcast",
-            },
-            subject: "Siema, dzięki że jesteś!",
-            content: [
               {
-                type: "text/html",
-                value: letter,
+                headers: {
+                  Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+                  "content-type": "application/json",
+                },
               },
-            ],
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
-              "content-type": "application/json",
-            },
-          },
-        )
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
-    });
+            )
+            .then(res => resolve(res))
+            .catch(err => reject(err));
+        },
+      );
+  });
 };
 
 export default (req: NowRequest, res: NowResponse) => {
@@ -93,7 +98,7 @@ export default (req: NowRequest, res: NowResponse) => {
       }
 
       // If not, register new contact
-      axios
+      return axios
         .put(
           "https://api.sendgrid.com/v3/marketing/contacts",
           { contacts: [{ email: req.body.email }] },
@@ -106,11 +111,15 @@ export default (req: NowRequest, res: NowResponse) => {
         )
         .then(() => {
           // Send welcome email
-          sendWelcomeEmail(req.body.email);
-
-          return res.status(201).json({
-            message: "Successfully added to the subscribers list",
-          });
+          return sendWelcomeEmail(req.body.email)
+            .then(() => {
+              return res.status(201).json({
+                message: "Successfully added to the subscribers list",
+              });
+            })
+            .catch(() => {
+              return res.status(500).json({ error: `Can't add user to the list` });
+            });
         })
         .catch(err => {
           return res.status(500).json({ error: `Can't add user to the list` });

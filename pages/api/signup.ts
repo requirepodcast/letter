@@ -16,7 +16,7 @@ const requestSchema = Joi.object({
 const sendWelcomeEmail = email => {
   remark()
     .use(html)
-    .process(welcomeEmail.replace(`{{{ link }}}`, "https://letter.podcast.gq"), (err, file) => {
+    .process(welcomeEmail.replace(`{{{ link }}}`, process.env.WELCOME_LETTER_LINK), (err, file) => {
       const letter = mailTemplate({ content: file, title: "require('letter')" });
 
       axios

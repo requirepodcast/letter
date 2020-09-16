@@ -89,8 +89,8 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
         <Heading>Require Letter</Heading>
         <Description>
           Nie zostań w tyle, wiedz więcej i bądź na bieżąco w świecie JavaScriptu - zapisz się do{" "}
-          <RedText>require('letter')</RedText>, odbierz list powitalny z niespodzianką i co tydzień
-          otrzymuj od nas newsletter z solidną dawką wiedzy 🔥
+          <RedText>require('letter')</RedText>, odbierz list powitalny z odcinkiem specjalnym i co
+          tydzień otrzymuj od nas newsletter z solidną dawką wiedzy 🔥
         </Description>
         <Form onSubmit={signUp}>
           <Input

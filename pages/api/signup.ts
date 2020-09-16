@@ -61,8 +61,8 @@ const sendWelcomeEmail = email => {
             },
           },
         )
-        .then(res => console.log(res.data))
-        .catch(err => console.log(err.response.data));
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
     });
 };
 

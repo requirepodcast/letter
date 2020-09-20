@@ -8,7 +8,7 @@ const SEO: React.FC<{ title?: string }> = ({ title }) => {
   return (
     <Head>
       <title>{title}</title>
-      <link rel="icon" href="/favicon.png" />
+      <link rel="icon" href="/require_mark_transparent.svg" />
     </Head>
   );
 };

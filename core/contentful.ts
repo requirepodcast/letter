@@ -16,7 +16,8 @@ export class ContentfulService {
 
   async getAllLetters(): Promise<Letter[]> {
     const entries = await this.client.getEntries<Letter>({ content_type: "letter" });
-    return entries.items.map(item => item.fields);
+
+    return entries.items.map(item => item.fields).reverse();
   }
 
   async getLetterBySlug(slug: string): Promise<{ letter: Letter; next: Letter; prev: Letter }> {

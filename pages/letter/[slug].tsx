@@ -31,6 +31,7 @@ const Content = styled.div`
     background-color: #eee;
     padding: 0 3px;
     color: ${({ theme }) => theme.bg.lighter};
+    display: inline-block;
   }
 `;
 

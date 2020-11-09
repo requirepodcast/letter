@@ -45,8 +45,8 @@ head
 body(style="margin: 0; background-color: #141722; font-family: \"Fira Sans\", sans-serif; padding: 30px;")
   div(style="background-color: #141722")
     div(style="background-color: white; max-width: 550px; margin: auto;")
-      header(style="background-color: #0f111a; display: flex; align-items: center;")
-        img(src="https://letter.podcast.gq/logo.png" style="width: 60px; height: 60px;")
-        span(style="color: #FF5370; font-family: 'Fira Mono', monospace; margin: auto;") #{title}
+      header(style="background-color: #0f111a; text-align: center; padding: 15px;")
+        img(src="https://letter.podcast.gq/logo.png" style="width: 150px; height: 150px;")
+        p(style="color: #FF5370; font-family: 'Fira Mono', monospace;") #{title}
       article(style="padding: 0 20px 20px 20px") !{content}
     a(href='\{\{\{unsubscribe\}\}\}' style="color: #FF5370; font-family: 'Fira Mono', monospace; text-align: center; margin: 5px; display: block;") Nie chcę więcej otrzymywać require('letter')

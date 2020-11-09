@@ -95,6 +95,8 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
         <Form onSubmit={signUp}>
           <Input
             placeholder="Adres E-Mail..."
+            aria-label="Adres E-Mail"
+            autocomplete="off"
             value={email}
             onChange={e => {
               validate(e.target.value);

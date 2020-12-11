@@ -75,33 +75,37 @@ const LetterPage: React.FC<{ letter: Letter; next: Letter; prev: Letter }> = ({
   next,
   prev,
 }) => {
-  return (
-    <>
-      <SEO title={letter.title} />
-      <Wrapper>
-        <H1>{letter.title}</H1>
-        <Content>
-          <article dangerouslySetInnerHTML={{ __html: letter.contentHtml }} />
-        </Content>
-        <Navigation>
-          {prev && (
-            <LinkContainer align="left">
-              <Link href="/letter/[slug]" as={`/letter/${prev.slug}`}>
-                <NavLink href={`/letter/${prev.slug}`}>{"<"} Poprzedni</NavLink>
-              </Link>
-            </LinkContainer>
-          )}
-          {next && (
-            <LinkContainer align="right">
-              <Link href="/letter/[slug]" as={`/letter/${next.slug}`}>
-                <NavLink href={`/letter/${next.slug}`}>Następny {">"}</NavLink>
-              </Link>
-            </LinkContainer>
-          )}
-        </Navigation>
-      </Wrapper>
-    </>
-  );
+  if (letter) {
+    return (
+      <>
+        <SEO title={letter.title} />
+        <Wrapper>
+          <H1>{letter.title}</H1>
+          <Content>
+            <article dangerouslySetInnerHTML={{ __html: letter.contentHtml }} />
+          </Content>
+          <Navigation>
+            {prev && (
+              <LinkContainer align="left">
+                <Link href="/letter/[slug]" as={`/letter/${prev.slug}`}>
+                  <NavLink href={`/letter/${prev.slug}`}>{"<"} Poprzedni</NavLink>
+                </Link>
+              </LinkContainer>
+            )}
+            {next && (
+              <LinkContainer align="right">
+                <Link href="/letter/[slug]" as={`/letter/${next.slug}`}>
+                  <NavLink href={`/letter/${next.slug}`}>Następny {">"}</NavLink>
+                </Link>
+              </LinkContainer>
+            )}
+          </Navigation>
+        </Wrapper>
+      </>
+    );
+  } else {
+    return <div>Loading...</div>;
+  }
 };
 
 export async function getStaticPaths() {

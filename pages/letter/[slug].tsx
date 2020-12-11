@@ -17,21 +17,31 @@ const Wrapper = styled.div`
 const Content = styled.div`
   max-width: 800px;
   width: 100%;
+  overflow: hidden;
+  word-wrap: break-word;
   flex: 1;
-  padding: 20px;
   background-color: white;
   color: black;
+  padding: 10px;
+  font-family: "Fira Sans", sans-serif;
 
   a {
     color: ${({ theme }) => theme.red};
   }
 
   code {
-    font-family: inherit;
+    font-family: "Fira Code", monospace;
     background-color: #eee;
-    padding: 0 3px;
     color: ${({ theme }) => theme.bg.lighter};
-    display: inline-block;
+  }
+
+  pre {
+    code {
+      display: block;
+      overflow: auto;
+      padding: 5px;
+      font-size: 0.8em;
+    }
   }
 `;
 
@@ -54,10 +64,10 @@ const NavLink = styled.a`
   text-decoration: underline;
 `;
 
-const H2 = styled.h2`
-  color: ${({ theme }) => theme.bg.lighter};
-  padding-bottom: 10px;
-  border-bottom: 2px solid ${({ theme }) => theme.bg.lighter};
+const H1 = styled.h1`
+  color: ${({ theme }) => theme.red};
+  text-align: center;
+  font-size: 20px;
 `;
 
 const LetterPage: React.FC<{ letter: Letter; next: Letter; prev: Letter }> = ({
@@ -69,8 +79,8 @@ const LetterPage: React.FC<{ letter: Letter; next: Letter; prev: Letter }> = ({
     <>
       <SEO title={letter.title} />
       <Wrapper>
+        <H1>{letter.title}</H1>
         <Content>
-          <H2>{letter.title}</H2>
           <article dangerouslySetInnerHTML={{ __html: letter.contentHtml }} />
         </Content>
         <Navigation>
@@ -103,7 +113,7 @@ export async function getStaticPaths() {
         slug: letter.slug,
       },
     })),
-    fallback: false,
+    fallback: true,
   };
 }
 

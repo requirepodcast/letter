@@ -3,7 +3,7 @@ import styled from "styled-components";
 import remark from "remark";
 import html from "remark-html";
 import Link from "next/link";
-import { ContentfulService, Letter } from "../../core/contentful";
+import { ContentfulService, Letter } from "../../integrations/contentful";
 import SEO from "../../components/SEO";
 
 const Wrapper = styled.div`

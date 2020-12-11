@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Joi from "joi";
 import { toast } from "react-toastify";
-import { Letter } from "../../core/contentful";
+import { Letter } from "../../integrations/contentful";
 import {
   Container,
   Column,
@@ -13,6 +13,14 @@ import {
   Button,
 } from "./Box.styles";
 import LetterListItem from "../LetterListItem";
+
+const toastConfig = {
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+};
 
 const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
   const [email, setEmail] = useState("");
@@ -28,42 +36,24 @@ const Box: React.FC<{ letters: Letter[] }> = ({ letters }) => {
         headers: {
           "Content-Type": "application/json",
         },
-      })
-        .then(res => {
-          if (res.status === 201) {
+      }).then(res => {
+        switch (res.status) {
+          case 201:
             toast(
               "Dodano do listy subskrybentów 🚀. Sprawdź swoją skrzynkę - wysłaliśmy do niej list z odcinkiem specjalnym!",
-              {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-              },
+              toastConfig,
             );
-          } else {
-            toast("Email już na liście subskrybentów ✉️. Do następnego listu!", {
-              position: "bottom-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
+            break;
+          case 409:
+            toast("Email już na liście subskrybentów ✉️. Do następnego listu!", toastConfig);
+            break;
+          default:
+            toast("Nie udało się dodać do listy subskrybentów. Spróbuj ponownie później 😔", {
+              ...toastConfig,
+              type: "error",
             });
-          }
-        })
-        .catch(() => {
-          toast("Nie udało się dodać do listy subskrybentów. Spróbuj ponownie później 😔", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            type: "error",
-          });
-        });
+        }
+      });
 
       setEmail("");
     }

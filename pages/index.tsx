@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import SEO from "../components/SEO";
 import Box from "../components/Box/Box";
-import { ContentfulService, Letter } from "../core/contentful";
+import { ContentfulService, Letter } from "../integrations/contentful";
 
 const Container = styled.div`
   display: flex;

@@ -1,6 +1,6 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import Joi from "joi";
-import { client } from "../../integrations/mailchimp";
+import { AUDIENCE_ID, client } from "../../integrations/mailchimp";
 
 const requestSchema = Joi.object({
   email: Joi.string()
@@ -19,7 +19,7 @@ export default (req: NowRequest, res: NowResponse) => {
     const { email } = req.body;
 
     client.lists
-      .addListMember("f0b446ee77", {
+      .addListMember(AUDIENCE_ID, {
         email_address: email,
         status: "subscribed",
       })

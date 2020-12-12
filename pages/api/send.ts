@@ -13,7 +13,7 @@ const requestSchema = Joi.object({
 });
 
 export default (req: NowRequest, res: NowResponse) => {
-  if (req.headers.x_api_key !== process.env.API_KEY) {
+  if (req.headers["x-api-key"] !== process.env.API_KEY) {
     return res.status(401).json({ errors: [{ error: "Not authenticated" }] });
   }
 

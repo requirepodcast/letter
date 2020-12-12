@@ -1,10 +1,11 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import remark from "remark";
 import html from "remark-html";
-import axios from "axios";
 import Joi from "joi";
+import Mustache from "mustache";
+import { AUDIENCE_ID, client, TEMPLATE_ID } from "../../integrations/mailchimp";
 
-const mailTemplate = require("../../templates/mailTemplate.pug");
+const template = require("../../templates/template.html").default;
 
 const requestSchema = Joi.object({
   content: Joi.string().required(),
@@ -12,8 +13,8 @@ const requestSchema = Joi.object({
 });
 
 export default (req: NowRequest, res: NowResponse) => {
-  if (req.headers.api_token !== process.env.API_TOKEN) {
-    return res.status(401).json({ error: "Not authenticated" });
+  if (req.headers.x_api_key !== process.env.API_KEY) {
+    return res.status(401).json({ errors: [{ error: "Not authenticated" }] });
   }
 
   const result = requestSchema.validate(req.body, { abortEarly: false });
@@ -22,40 +23,46 @@ export default (req: NowRequest, res: NowResponse) => {
     return res.status(400).json({ errors: result.error.details.map(err => err.message) });
   }
 
-  remark()
-    .use(html)
-    .process(req.body.content, (err, file) => {
-      if (err) {
-        return res.status(400).json({ errors: [{ error: `Can't process provided markdown` }] });
-      }
+  return new Promise(resolve => {
+    const { title, content } = req.body;
 
-      let { title } = req.body;
-      const letter = mailTemplate({ content: file, title: title });
+    remark()
+      .use(html)
+      .process(content, async (err, result) => {
+        if (err) {
+          return resolve(
+            res.status(400).json({ errors: [{ error: `Can't process provided markdown` }] }),
+          );
+        }
 
-      return axios
-        .post(
-          "https://api.sendgrid.com/v3/marketing/singlesends",
-          {
-            name: title,
-            send_to: { all: true },
-            email_config: {
-              subject: title,
-              html_content: letter,
-              sender_id: 1017070,
-              suppression_group_id: -1,
-            },
+        const { id } = await client.campaigns.create({
+          type: "regular",
+          recipients: { list_id: AUDIENCE_ID },
+          settings: {
+            subject_line: title,
+            title,
+            from_name: "Require Podcast",
+            reply_to: "require@podcast.gq",
           },
-          { headers: { Authorization: `Bearer ${process.env.SENDGRID_API_KEY}` } },
-        )
-        .then(() => {
-          return res.json({
-            message: "Prepared the email, now go to sendgrid and send it to the world!",
-            html: letter,
-          });
-        })
-        .catch(err => {
-          console.log(err.response.data);
-          return res.status(500).json({ error: `Can't prepare the email` });
         });
-    });
+
+        if (!id) {
+          return resolve(res.status(500).json({ errors: [{ error: `Can't create campaign` }] }));
+        }
+
+        const mail = Mustache.render(template, { content: result });
+
+        client.campaigns
+          .setContent(id, {
+            html: mail,
+          })
+          .then(() => {
+            resolve(res.json({ message: "Success" }));
+          })
+          .catch(err => {
+            console.log(err.response.body);
+            resolve(res.status(500).json({ errors: [{ error: `Can't create campaign` }] }));
+          });
+      });
+  });
 };

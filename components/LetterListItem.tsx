@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import { format } from "light-date";
-import { Letter } from "../core/contentful";
+import { Letter } from "../integrations/contentful";
 import { trim } from "../utils/trim";
 
 const Container = styled.div`

@@ -50,7 +50,7 @@ export default (req: NowRequest, res: NowResponse) => {
           return resolve(res.status(500).json({ errors: [{ error: `Can't create campaign` }] }));
         }
 
-        const mail = Mustache.render(template, { content });
+        const mail = Mustache.render(template, { content: result });
 
         client.campaigns
           .setContent(id, {

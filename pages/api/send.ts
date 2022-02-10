@@ -42,7 +42,7 @@ export default (req: NowRequest, res: NowResponse) => {
             subject_line: title,
             title,
             from_name: "Require Podcast",
-            reply_to: "require@podcast.gq",
+            reply_to: "require@require.pl",
           },
         });
 
